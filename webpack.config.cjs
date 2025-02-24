@@ -9,6 +9,9 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         clean: true
     },
+    devServer: {
+        port: 5174
+    },
     module: {
         rules: [
             {
@@ -24,14 +27,14 @@ module.exports = {
                 use: [
                     'vue-style-loader',
                     'css-loader',
-                    'sass-loader',
+                    'sass-loader'
                 ],
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'images/[name].[ext]'
+                    filename: 'assets/[name][ext]'
                 }
             }
         ]
@@ -39,7 +42,7 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
-            template: './public/index.html'
+            template: './src/index.html'
         })
     ]
 }
