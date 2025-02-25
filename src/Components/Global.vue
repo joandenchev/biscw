@@ -1,4 +1,3 @@
-<!--suppress JSUnusedGlobalSymbols -->
 <script setup lang="js">
 import RightTab from "./RightTab.vue";
 import LeftTab from "./LeftTab.vue";
@@ -17,12 +16,11 @@ const cursor = computed(() => resizing.value ? 'grabbing' : 'grab')
 function resize(event){
   if (resizing.value){
     ltW.value = event.clientX / window.innerWidth * 100
-    rtW.value = 99.84 - ltW.value
+    rtW.value = 99.84 - <ltW class="value"></ltW>
   }
 }
 function touchResize(event){
   if (resizing.value){
-    console.log('hey touchyyy')
     ltW.value = event.touches[0].clientX / window.innerWidth * 100
     rtW.value = 99.84 - ltW.value
   }
