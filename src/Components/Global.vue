@@ -3,26 +3,35 @@ import RightTab from "./RightTab.vue";
 import LeftTab from "./LeftTab.vue";
 import {computed, onMounted, reactive, ref} from "vue";
 
-const ltW = ref(49.92)
-const rtW = ref(49.92)
+function toPercent(s){
+  return s + '%'
+}
+
+const sW = 0.16
+const sWC = toPercent(sW)
+
+const ltW = ref(50 - (sW / 2))
 const splitHovered = ref(false)
 const resizing = ref(false)
 
-const ltWC = computed(() => ltW.value + '%')
-const rtWC = computed(() => rtW.value + '%')
+const rtW = computed(()=> 100 - sW - ltW.value)
+const ltWC = computed(() => toPercent(ltW.value))
+const rtWC = computed(() => toPercent(rtW.value))
 const isWC = computed(() => resizing.value ? '20%' : '0.48%')
 const cursor = computed(() => resizing.value ? 'grabbing' : 'grab')
 
 function resize(event){
   if (resizing.value){
-    ltW.value = event.clientX / window.innerWidth * 100
-    rtW.value = 99.84 - <ltW class="value"></ltW>
+    const a = event.clientX / window.innerWidth * 100
+    if (a > 95) ltW.value = 100 - sW
+    else if (a < 52.5 && a > 47.5) ltW.value = 50 - (sW / 2)
+    else if (a < 5) ltW.value = 0
+    else ltW.value = a
   }
 }
 function touchResize(event){
   if (resizing.value){
     ltW.value = event.touches[0].clientX / window.innerWidth * 100
-    rtW.value = 99.84 - ltW.value
   }
 }
 
@@ -75,7 +84,7 @@ html, body, #start{
 }
 #splitter{
   background-color: bisque;
-  width: 0.16%;
+  width: v-bind(sWC);
 }
 #increaseSplitter{
   height: 100%;
@@ -90,7 +99,7 @@ html, body, #start{
   width: v-bind(ltWC);
 }
 #rt{
-  background-color: indianred;
+  background-color: mediumpurple;
   width: v-bind(rtWC);
 }
 </style>
