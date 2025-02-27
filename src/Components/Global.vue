@@ -71,6 +71,11 @@ onMounted(()=>{
 </template>
 
 <style lang="scss">
+$text: #0d0e0f;
+$background: #f7f8fb;
+$primary: #4e68bb;
+$secondary: #95a9e7;
+$accent: #4b71ec;
 
 html, body, #start{
   height: 100%;
@@ -83,8 +88,9 @@ html, body, #start{
   display: flex;
 }
 #splitter{
-  background-color: bisque;
+  background-color: $secondary;
   width: v-bind(sWC);
+  min-height: 12px;
 }
 #increaseSplitter{
   height: 100%;
@@ -95,11 +101,11 @@ html, body, #start{
   cursor: v-bind(cursor);
 }
 #lt {
-  background-color: cadetblue;
+  background-color: $background;
   width: v-bind(ltWC);
 }
 #rt{
-  background-color: mediumpurple;
+  background-color: lightgreen;
   width: v-bind(rtWC);
 }
 </style>
