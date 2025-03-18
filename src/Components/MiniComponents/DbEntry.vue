@@ -4,7 +4,7 @@ const props = defineProps(['nameOfDb'])
 const newName = ref(props.nameOfDb)
 
 onMounted(() =>{
-  if (props.nameOfDb && props.nameOfDb.length > 10){
+  if (props.nameOfDb && props.nameOfDb.length > 9){
     newName.value = props.nameOfDb.slice(0, 7) + '...'
   }
 })
@@ -24,7 +24,9 @@ onMounted(() =>{
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 10ch;
+  width: 8ch;
+  max-width: 8ch;
+  min-width: 8ch;
   margin-right: 1rem;
 }
 #dbe img{

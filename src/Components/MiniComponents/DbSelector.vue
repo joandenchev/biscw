@@ -12,12 +12,14 @@ const flippedScroll = function (event) {
   <div id="outer-db-selector">
   <div id="db-selector"
   @wheel="flippedScroll">
-    <DbEntry name-of-db="Joanko"></DbEntry>
+    <DbEntry name-of-db="Joan"></DbEntry>
     <DbEntry name-of-db="nqkakvo mnogo dulgo ime"></DbEntry>
     <DbEntry></DbEntry>
     <DbEntry></DbEntry>
     <DbEntry></DbEntry>
-    <DbEntry name-of-db="0000000000"></DbEntry>
+    <DbEntry name-of-db="000000000"></DbEntry>
+    <DbEntry name-of-db="000000000"></DbEntry>
+    <DbEntry name-of-db="000000000"></DbEntry>
     <DbEntry></DbEntry>
     <DbEntry></DbEntry>
     <DbEntry></DbEntry>
