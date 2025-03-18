@@ -1,15 +1,21 @@
 <script setup>
+import DbSelector from "./MiniComponents/DbSelector.vue";
 </script>
 
 <template>
 <div id="lt">
-  <h1>Здравей, дядо!</h1>
+  <div>
+    <h2>Panel control</h2>
+  </div>
+  <DbSelector></DbSelector>
 </div>
 </template>
 
 <style scoped lang="scss">
-h1{
-  padding-left: 20px;
-  text-align: center;
+h2{
+  display: block;
+  margin-left: 1.5rem;
+  width: max-content;
+  font-style: italic;
 }
 </style>

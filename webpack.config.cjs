@@ -4,6 +4,12 @@ const path = require('path');
 
 module.exports = {
     entry: './src/index.js',
+    resolve: {
+        alias:{
+            src: path.resolve(__dirname, 'src'),
+            assets: path.resolve(__dirname, 'assets')
+        }
+    },
     output: {
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist'),
@@ -27,7 +33,12 @@ module.exports = {
                 use: [
                     'vue-style-loader',
                     'css-loader',
-                    'sass-loader'
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            additionalData: `@use 'src/styles' as *;`
+                        }
+                    }
                 ],
             },
             {

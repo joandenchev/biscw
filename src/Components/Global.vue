@@ -71,18 +71,15 @@ onMounted(()=>{
 </template>
 
 <style lang="scss">
-$text: #0d0e0f;
-$background: #f7f8fb;
-$primary: #4e68bb;
-$secondary: #95a9e7;
-$accent: #4b71ec;
-
 html, body, #start{
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;
+}
+p {
+  margin: 0;
 }
 #start{
   display: flex;
@@ -105,7 +102,7 @@ html, body, #start{
   width: v-bind(ltWC);
 }
 #rt{
-  background-color: lightgreen;
+  background-color: $background;
   width: v-bind(rtWC);
 }
 </style>
