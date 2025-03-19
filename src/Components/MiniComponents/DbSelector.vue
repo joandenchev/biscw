@@ -41,9 +41,8 @@ const flippedScroll = function (event) {
 }
 #outer-db-selector{
   margin: 1rem;
-  border-radius: 0 4rem;
   border: 0.2rem solid;
-  padding: 0 4rem 0 4rem;
+  padding: 0 2rem;
   background-color: $darker-background;
 }
 </style>
