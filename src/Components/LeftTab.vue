@@ -17,5 +17,6 @@ h2{
   margin-left: 1.5rem;
   width: max-content;
   font-style: italic;
+  cursor: pointer;
 }
 </style>
