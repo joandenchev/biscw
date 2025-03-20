@@ -7,31 +7,30 @@ function toPercent(s){
   return s + '%'
 }
 
-const sW = 0.16
-const sWC = toPercent(sW)
+const sW = 24
+const sWC = `0.${sW}rem`
 
-const ltW = ref(50 - (sW / 2))
+const ltWP = ref(50)
 const splitHovered = ref(false)
 const resizing = ref(false)
 
-const rtW = computed(()=> 100 - sW - ltW.value)
-const ltWC = computed(() => toPercent(ltW.value))
-const rtWC = computed(() => toPercent(rtW.value))
-const isWC = computed(() => resizing.value ? '20%' : '0.48%')
+const ltWC = computed(() => `calc(${ltWP.value}% - 0.${sW/2}rem)`)
+const rtWC = computed(() => `calc(${100-ltWP.value}% - 0.${sW/2}rem)`)
+const isWC = computed(() => resizing.value ? '20%' : '1rem')
 const cursor = computed(() => resizing.value ? 'grabbing' : 'grab')
 
 function resize(event){
   if (resizing.value){
     const a = event.clientX / window.innerWidth * 100
-    if (a > 95) ltW.value = 100 - sW
-    else if (a < 52.5 && a > 47.5) ltW.value = 50 - (sW / 2)
-    else if (a < 5) ltW.value = 0
-    else ltW.value = a
+    if (a > 98) ltWP.value = 100
+    else if (a < 52 && a > 48) ltWP.value = 50
+    else if (a < 2) ltWP.value = 0
+    else ltWP.value = a
   }
 }
 function touchResize(event){
   if (resizing.value){
-    ltW.value = event.touches[0].clientX / window.innerWidth * 100
+    ltWP.value = event.touches[0].clientX / window.innerWidth * 100
   }
 }
 
@@ -63,6 +62,7 @@ onMounted(()=>{
          @mousedown="resizing = true"
          @mousemove="resize"
          @mouseup  ="resizing = false"
+         @mouseout ="resizing = false"
     >
     </div>
   </div>
@@ -87,12 +87,10 @@ p {
 #splitter{
   background-color: $secondary;
   width: v-bind(sWC);
-  min-height: 12px;
 }
 #increaseSplitter{
   height: 100%;
   width: v-bind(isWC);
-  min-width: 10px;
   position: absolute;
   transform: translateX(-50%);
   cursor: v-bind(cursor);
@@ -100,9 +98,13 @@ p {
 #lt {
   background-color: $background;
   width: v-bind(ltWC);
+  //max-width: calc(100% - 0.24rem);
+  display: flex;
+  flex-direction: column;
 }
 #rt{
   background-color: $background;
   width: v-bind(rtWC);
+  //max-width: calc(100% - 0.24rem);
 }
 </style>
