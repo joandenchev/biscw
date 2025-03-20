@@ -4,7 +4,7 @@ import { onMounted, ref } from "vue";
 import { globals } from "../globals.js"
 
 const activeDbIndex = ref(null)
-const namesOfDbs=['Joan', 'Prizovava', 'Maximus', 'Ultra', 'Vuicho', 'Huicho', 'Aquos', 'Pyrus', 'Darkus']
+const namesOfDbs=['Joan', 'Prizovava', 'Maximus', 'Ultra', 'Vuicho', 'Mnogo dulug text', 'Aquos', 'Pyrus', 'Darkus']
 onMounted(()=>{
   globals.activeDbName = namesOfDbs[activeDbIndex.value]
   globals.a = 'sex'

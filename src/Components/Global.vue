@@ -3,10 +3,6 @@ import RightTab from "./RightTab.vue";
 import LeftTab from "./LeftTab.vue";
 import {computed, onMounted, reactive, ref} from "vue";
 
-function toPercent(s){
-  return s + '%'
-}
-
 const sW = 24
 const sWC = `0.${sW}rem`
 
@@ -98,13 +94,11 @@ p {
 #lt {
   background-color: $background;
   width: v-bind(ltWC);
-  //max-width: calc(100% - 0.24rem);
   display: flex;
   flex-direction: column;
 }
 #rt{
   background-color: $background;
   width: v-bind(rtWC);
-  //max-width: calc(100% - 0.24rem);
 }
 </style>
