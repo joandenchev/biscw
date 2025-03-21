@@ -7,7 +7,6 @@ const activeDbIndex = ref(null)
 const namesOfDbs=['Joan', 'Prizovava', 'Maximus', 'Ultra', 'Vuicho', 'Mnogo dulug text', 'Aquos', 'Pyrus', 'Darkus']
 onMounted(()=>{
   globals.activeDbName = namesOfDbs[activeDbIndex.value]
-  globals.a = 'sex'
 })
 const flippedScroll = function (event) {
   if (event.deltaY) {
