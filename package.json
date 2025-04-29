@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "bundle": "npx webpack       --mode production  --config webpack.config.cjs",
+    "bundle": "npx webpack    --mode production  --config webpack.config.cjs",
     "dev": "npx webpack serve --mode development --config webpack.config.cjs",
     "clear": "rmdir /s /q dist\n"
   },

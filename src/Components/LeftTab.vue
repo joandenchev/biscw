@@ -1,6 +1,6 @@
 <script setup>
 import DbSelector from "./MiniComponents/DbSelector.vue";
-import {globals} from "./globals.js";
+import {globals} from "../globals.js";
 </script>
 
 <template>

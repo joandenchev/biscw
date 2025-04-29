@@ -46,7 +46,7 @@ function checkOverflow(el){
 .inner-dbe{
   max-width: $db-entry-weight;
   min-width: $db-entry-weight;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: center;

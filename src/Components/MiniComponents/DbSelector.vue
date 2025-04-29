@@ -1,7 +1,7 @@
 <script setup>
 import DbEntry from "./DbEntry.vue";
 import { onMounted, ref } from "vue";
-import { globals } from "../globals.js"
+import { globals } from "../../globals.js"
 
 const activeDbIndex = ref(null)
 const namesOfDbs=['Joan', 'Prizovava', 'Maximus', 'Ultra', 'Vuicho', 'Mnogo dulug text', 'Aquos', 'Pyrus', 'Darkus']

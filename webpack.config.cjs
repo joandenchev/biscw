@@ -17,7 +17,10 @@ module.exports = {
         clean: true
     },
     devServer: {
-        port: 5174
+        port: 80,
+        allowedHosts: [
+            'joan'
+        ]
     },
     module: {
         rules: [
