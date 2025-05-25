@@ -2,6 +2,7 @@
 import RightTab from "./RightTab.vue";
 import LeftTab from "./LeftTab.vue";
 import {computed, onMounted, reactive, ref} from "vue";
+import {globals} from "../globals.js";
 
 const sW = 24
 const sWC = `0.${sW}rem`
@@ -14,6 +15,7 @@ const ltWC = computed(() => `calc(${ltWP.value}% - 0.${sW/2}rem)`)
 const rtWC = computed(() => `calc(${100-ltWP.value}% - 0.${sW/2}rem)`)
 const isWC = computed(() => resizing.value ? '20%' : '1rem')
 const cursor = computed(() => resizing.value ? 'grabbing' : 'grab')
+globals.resizing = resizing
 
 function resize(event){
   if (resizing.value){
@@ -67,11 +69,13 @@ onMounted(()=>{
 </template>
 
 <style lang="scss">
-html, body, #start{
-  height: 100%;
-  width: 100%;
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+html, body, #start{
+  height: 100%;
   overflow: hidden;
 }
 p {
@@ -98,7 +102,7 @@ p {
   flex-direction: column;
 }
 #rt{
-  background-color: $background;
   width: v-bind(rtWC);
+  overflow: hidden;
 }
 </style>
