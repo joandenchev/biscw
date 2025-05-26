@@ -1,8 +1,10 @@
 <script setup lang="js">
 import RightTab from "./RightTab.vue";
 import LeftTab from "./LeftTab.vue";
-import {computed, onMounted, reactive, ref} from "vue";
+import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {globals} from "../globals.js";
+
+const splitter = ref()
 
 const sW = 24
 const sWC = `0.${sW}rem`
@@ -10,12 +12,12 @@ const sWC = `0.${sW}rem`
 const ltWP = ref(50)
 const splitHovered = ref(false)
 const resizing = ref(false)
+globals.resizing = resizing
 
 const ltWC = computed(() => `calc(${ltWP.value}% - 0.${sW/2}rem)`)
 const rtWC = computed(() => `calc(${100-ltWP.value}% - 0.${sW/2}rem)`)
 const isWC = computed(() => resizing.value ? '20%' : '1rem')
 const cursor = computed(() => resizing.value ? 'grabbing' : 'grab')
-globals.resizing = resizing
 
 function resize(event){
   if (resizing.value){
@@ -26,22 +28,58 @@ function resize(event){
     else ltWP.value = a
   }
 }
-function touchResize(event){
-  if (resizing.value){
-    ltWP.value = event.touches[0].clientX / window.innerWidth * 100
-  }
+function startResize(){
+  resizing.value = true
+  window.addEventListener('mouseup', releaseResize, {once: true})
+}
+function releaseResize(event){
+  event.preventDefault()
+  resizing.value = false
 }
 
-const touchControlSplit = reactive({})
-const touchControlIncrease = reactive({})
+const touchFunctions = {}
 
 
 onMounted(()=>{
-  if('ontouchstart' in window || navigator.maxTouchPoints > 0){
-    touchControlSplit.touchstart=()=>{splitHovered.value=true}
-    touchControlIncrease.touchstart=()=>{resizing.value=true}
-    touchControlIncrease.touchmove=touchResize
-    touchControlIncrease.touchend=()=>{resizing.value=false}
+  globals.touchDisplay = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+
+  if(globals.touchDisplay){
+
+    globals.splitHovered = splitHovered
+
+    touchFunctions.touchResize = function (event) {
+      event.preventDefault()
+      if (resizing.value) {
+        const a = event.touches[0].clientX / window.innerWidth * 100
+        if (a > 98) ltWP.value = 100
+        else if (a < 52 && a > 48) ltWP.value = 50
+        else if (a < 2) ltWP.value = 0
+        else ltWP.value = a
+      }
+    }
+
+    touchFunctions.touchStart = function (event) {
+      event.preventDefault()
+      resizing.value=true
+    }
+
+    touchFunctions.touchEnd = function () {
+      resizing.value=false
+      splitHovered.value=false
+    }
+  }
+})
+
+watch(splitHovered, async (newVal) => {
+  if (newVal) {
+    await nextTick();
+    splitter.value.addEventListener('touchmove', touchFunctions.touchResize, {passive: false})
+    splitter.value.addEventListener('touchstart', touchFunctions.touchStart, {passive: false})
+    splitter.value.addEventListener('touchend', touchFunctions.touchEnd)
+  } else {
+    splitter.value.removeEventListener('touchmove', touchFunctions.touchResize)
+    splitter.value.removeEventListener('touchstart', touchFunctions.touchStart)
+    splitter.value.removeEventListener('touchEnd', touchFunctions.touchEnd)
   }
 })
 
@@ -50,21 +88,17 @@ onMounted(()=>{
 <template>
   <left-tab></left-tab>
   <div id="splitter"
-       v-on="touchControlSplit"
        @mouseenter="splitHovered=true"
   >
     <div id="increaseSplitter"
          v-if="splitHovered"
-         v-on="touchControlIncrease"
-         @mouseleave="resizing ? null : splitHovered=false"
-         @mousedown="resizing = true"
+         @mouseleave="resizing || (splitHovered=false)"
+         @mousedown.prevent="startResize"
          @mousemove="resize"
-         @mouseup  ="resizing = false"
-         @mouseout ="resizing = false"
+         ref="splitter"
     >
     </div>
   </div>
-
   <right-tab></right-tab>
 </template>
 

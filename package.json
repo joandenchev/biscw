@@ -5,7 +5,7 @@
   "scripts": {
     "bundle": "npx webpack    --mode production  --config webpack.config.cjs",
     "dev": "npx webpack serve --mode development --config webpack.config.cjs",
-    "clear": "rmdir /s /q dist\n"
+    "clear": "rmdir /s /q dist"
   },
   "author": "Joan Denchev",
   "private": "true",
