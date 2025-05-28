@@ -4,7 +4,7 @@ import {globals} from "../../globals.js";
 import {onMounted, ref} from "vue";
 
 const props = defineProps(['left'])
-const btn = ref()
+const btnDiv = ref()
 
 function toggleResize(){
   globals.splitHovered = !globals.splitHovered
@@ -12,14 +12,14 @@ function toggleResize(){
 
 onMounted(()=>{
   if (props.left){
-    globals.leftTouchToggleDiv = btn
+    globals.leftTouchToggleDiv = btnDiv
   }
 })
 </script>
 <template>
   <div v-if="globals.touchDisplay"
        class="crazyDiv"
-       ref="btn">
+       ref="btnDiv">
     <button :class="['mobile-resize-toggle-button', {'selected': globals.splitHovered}]"
             @click="toggleResize">
       <img src="~assets/resize-mobile.svg" alt="Toggle resize" title="Toggle resize" class="mobile-resize-toggle-image">
@@ -30,7 +30,6 @@ onMounted(()=>{
 <style scoped lang="scss">
 .crazyDiv{
   padding-right: 1rem;
-  //width: fit-content;
 }
 .mobile-resize-toggle-image{
   display: block;
