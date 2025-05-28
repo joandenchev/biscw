@@ -1,19 +1,37 @@
+<!--suppress HtmlUnknownTarget -->
 <script setup lang="js">
 import {globals} from "../../globals.js";
+import {onMounted, ref} from "vue";
+
+const props = defineProps(['left'])
+const btn = ref()
 
 function toggleResize(){
-  globals.splitHovered = true
+  globals.splitHovered = !globals.splitHovered
 }
+
+onMounted(()=>{
+  if (props.left){
+    globals.leftTouchToggleDiv = btn
+  }
+})
 </script>
 <template>
-  <button v-if="globals.touchDisplay"
-          :class="['mobile-resize-toggle-button', {'selected': globals.splitHovered}]"
-          @click="toggleResize">
-    <img src="~assets/resize-mobile.svg" alt="Toggle resize" title="Toggle resize" class="mobile-resize-toggle-image">
-  </button>
+  <div v-if="globals.touchDisplay"
+       class="crazyDiv"
+       ref="btn">
+    <button :class="['mobile-resize-toggle-button', {'selected': globals.splitHovered}]"
+            @click="toggleResize">
+      <img src="~assets/resize-mobile.svg" alt="Toggle resize" title="Toggle resize" class="mobile-resize-toggle-image">
+    </button>
+  </div>
 </template>
 
 <style scoped lang="scss">
+.crazyDiv{
+  padding-right: 1rem;
+  //width: fit-content;
+}
 .mobile-resize-toggle-image{
   display: block;
   width: 2.5em;
@@ -21,7 +39,7 @@ function toggleResize(){
 }
 .mobile-resize-toggle-button{
   background-color: $darker-background;
-  padding: 0.1em;
+  padding: 0.3em;
   border: #0d0e0f 0.2em solid;
   border-radius: 0.7em;
 }

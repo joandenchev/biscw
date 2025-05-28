@@ -4,7 +4,11 @@ import LeftTab from "./LeftTab.vue";
 import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {globals} from "../globals.js";
 
+//lt -> left tab
+//rt -> right tab
+
 const splitter = ref()
+const increaseSplitter = ref()
 
 const sW = 24
 const sWC = `0.${sW}rem`
@@ -44,50 +48,61 @@ onMounted(()=>{
   globals.touchDisplay = 'ontouchstart' in window || navigator.maxTouchPoints > 0
 
   if(globals.touchDisplay){
+    nextTick(()=>{
+      globals.splitHovered = splitHovered
+      const splitterLeftCoordinateGetter = () => splitter.value.getBoundingClientRect().left
+      const buttonRightCoordinateGetter = () => globals.leftTouchToggleDiv.getBoundingClientRect().right
 
-    globals.splitHovered = splitHovered
-
-    touchFunctions.touchResize = function (event) {
-      event.preventDefault()
-      if (resizing.value) {
-        const a = event.touches[0].clientX / window.innerWidth * 100
-        if (a > 98) ltWP.value = 100
-        else if (a < 52 && a > 48) ltWP.value = 50
-        else if (a < 2) ltWP.value = 0
-        else ltWP.value = a
+      //logic for moving the resize toggle when necessary
+      const triggeredResize = function () {
+        globals.leftTouchResizeToggleHidden = splitterLeftCoordinateGetter() < buttonRightCoordinateGetter()
       }
-    }
+      triggeredResize()
 
-    touchFunctions.touchStart = function (event) {
-      event.preventDefault()
-      resizing.value=true
-    }
+      touchFunctions.touchResize = function (event) {
+        event.preventDefault()
+        triggeredResize()
+        if (resizing.value) {
+          const a = event.touches[0].clientX / window.innerWidth * 100
+          if (a > 98) ltWP.value = 100
+          else if (a < 52 && a > 48) ltWP.value = 50
+          else if (a < 2) ltWP.value = 0
+          else ltWP.value = a
+        }
+      }
 
-    touchFunctions.touchEnd = function () {
-      resizing.value=false
-      splitHovered.value=false
-    }
+      touchFunctions.touchStart = function (event) {
+        event.preventDefault()
+        resizing.value=true
+      }
+
+      touchFunctions.touchEnd = function () {
+        resizing.value=false
+        splitHovered.value=false
+      }
+
+      watch(splitHovered, async (newVal) => {
+        if (newVal) {
+          await nextTick();
+          increaseSplitter.value.addEventListener('touchmove',  touchFunctions.touchResize, {passive: false})
+          increaseSplitter.value.addEventListener('touchstart', touchFunctions.touchStart, {passive: false})
+          increaseSplitter.value.addEventListener('touchend',   touchFunctions.touchEnd)
+        } else {
+          increaseSplitter.value.removeEventListener('touchmove',  touchFunctions.touchResize)
+          increaseSplitter.value.removeEventListener('touchstart', touchFunctions.touchStart)
+          increaseSplitter.value.removeEventListener('touchEnd',   touchFunctions.touchEnd)
+        }
+      })
+    })
+
   }
 })
-
-watch(splitHovered, async (newVal) => {
-  if (newVal) {
-    await nextTick();
-    splitter.value.addEventListener('touchmove', touchFunctions.touchResize, {passive: false})
-    splitter.value.addEventListener('touchstart', touchFunctions.touchStart, {passive: false})
-    splitter.value.addEventListener('touchend', touchFunctions.touchEnd)
-  } else {
-    splitter.value.removeEventListener('touchmove', touchFunctions.touchResize)
-    splitter.value.removeEventListener('touchstart', touchFunctions.touchStart)
-    splitter.value.removeEventListener('touchEnd', touchFunctions.touchEnd)
-  }
-})
-
 </script>
 
 <template>
   <left-tab></left-tab>
   <div id="splitter"
+       ref="splitter"
        @mouseenter="splitHovered=true"
   >
     <div id="increaseSplitter"
@@ -95,7 +110,7 @@ watch(splitHovered, async (newVal) => {
          @mouseleave="resizing || (splitHovered=false)"
          @mousedown.prevent="startResize"
          @mousemove="resize"
-         ref="splitter"
+         ref="increaseSplitter"
     >
     </div>
   </div>
