@@ -3,13 +3,17 @@ import DbSelector from "./MiniComponents/DbSelector.vue";
 import {globals} from "../globals.js";
 import TouchResizeToggle from "./MiniComponents/TouchResizeToggle.vue";
 
+const props = defineProps(['touchDisplay'])
 </script>
 
 <template>
 <div id="lt">
   <div class="header">
     <h2>Panel control</h2>
-    <touch-resize-toggle :left="true" :style="{ visibility: globals.leftTouchResizeToggleHidden ? 'hidden' : 'visible' }"></touch-resize-toggle>
+    <touch-resize-toggle v-if="props.touchDisplay"
+                         :left="true"
+                         :style="{ visibility: globals.leftTouchResizeToggleHidden ? 'hidden' : 'visible' }"
+    ></touch-resize-toggle>
   </div>
 
   <div class="selector-div">

@@ -1,31 +1,43 @@
 <script setup>
 import maplibre from "maplibre-gl"
-
-import {computed, nextTick, onMounted, ref} from "vue";
+import {computed,  nextTick, onMounted, ref, watch} from "vue";
 import {globals} from "../globals.js";
 import TouchResizeToggle from "./MiniComponents/TouchResizeToggle.vue";
 
+const props = defineProps(['resizing'])
 const rt = ref()
-
+const map = {}
 
 onMounted(()=>{
   nextTick( ()=>{
-    const rtWCinPx = computed(() => (globals.resizing, rt.value.clientWidth))
-    const map = new maplibre.Map({
+    map.width = computed(() => (props.resizing, rt.value.clientWidth))
+    map.instance = new maplibre.Map({
       container: 'map',
       style: 'https://demotiles.maplibre.org/style.json',
-      center: [23.1, 42.6],
+      center: [25.5, 42.5],
       zoom: 6
     })
-    map.easeTo({
-      center: [23.1, 42.6],
-      zoom: 6,
+    map.instance.easeTo({
+      center: map.instance.getCenter(),
+      zoom: map.instance.getZoom(),
       duration: 1000,
-      offset: [-rtWCinPx.value/2, 0]
+      offset: [-map.width.value/2, 0]
     })
   })
 })
-
+watch(() => props.resizing, (newVal)=>{
+  if (newVal) {
+    map.rtOld = map.width.value
+  } else {
+    const offset = (map.width.value - map.rtOld) / 2
+    map.instance.easeTo({
+      center: map.instance.getCenter(),
+      zoom: map.instance.getZoom(),
+      duration: 1000,
+      offset: [offset, 0]
+    })
+  }
+})
 </script>
 
 <template>

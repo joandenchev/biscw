@@ -1,12 +1,13 @@
 <script setup>
 import DbEntry from "./DbEntry.vue";
-import { onMounted, ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import { globals } from "../../globals.js"
 
-const activeDbIndex = ref(null)
-const namesOfDbs=['Joan', 'Prizovava', 'Maximus', 'Ultra', 'Vuicho', 'Mnogo dulug text', 'Aquos', 'Pyrus', 'Darkus']
-onMounted(()=>{
-  globals.activeDbName = namesOfDbs[activeDbIndex.value]
+const activeDbName = ref()
+// All DB names must be unique and checked because they are used as keys in a v-for!
+const namesOfDbs=['Joan', 'Casts', 'Maximus', 'Pyrus', 'Ima', 'I', 'Mnogo dulug text', 'Aquos', 'Subterra', 'Darkus']
+onBeforeMount(()=>{
+  globals.activeDbName = activeDbName
 })
 const flippedScroll = function (event) {
   if (event.deltaY) {
@@ -14,9 +15,8 @@ const flippedScroll = function (event) {
   }
 }
 
-const setActiveDb = function (index) {
-  activeDbIndex.value = index
-  globals.activeDbName = namesOfDbs[activeDbIndex.value]
+const setActiveDb = function (el) {
+  activeDbName.value = el
 }
 
 </script>
@@ -25,11 +25,11 @@ const setActiveDb = function (index) {
   <div id="outer-db-selector">
   <div id="db-selector"
        @wheel.passive="flippedScroll">
-    <DbEntry v-for="(el, i) in namesOfDbs"
-             :key="i"
+    <DbEntry v-for="el in namesOfDbs"
+             :key="el"
              :name-of-db="el"
-             :class="i === activeDbIndex ? 'selected-dbe' : ''"
-             @click="() => setActiveDb(i)"
+             :class="el === activeDbName ? 'selected-dbe' : ''"
+             @click="() => setActiveDb(el)"
     ></DbEntry>
     <h4 v-if="!namesOfDbs.length">Unable to get databases!</h4>
   </div>

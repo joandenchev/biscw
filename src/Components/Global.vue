@@ -1,7 +1,7 @@
 <script setup lang="js">
 import RightTab from "./RightTab.vue";
 import LeftTab from "./LeftTab.vue";
-import {computed, nextTick, onBeforeMount, onMounted, ref, watch} from "vue";
+import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {globals} from "../globals.js";
 
 //lt -> left tab
@@ -16,7 +16,7 @@ const splitterWidthFormatted = `0.${splitterWidthInPercentOfOneRem}rem`
 const ltWidthPercentage = ref(50)
 const splitHovered = ref(false)
 const resizing = ref(false)
-globals.resizing = resizing
+const touchDisplay = 'ontouchstart' in window || navigator.maxTouchPoints > 0
 
 const ltWidthComputed = computed(() => `calc(${ltWidthPercentage.value}% - 0.${splitterWidthInPercentOfOneRem/2}rem)`)
 const rtWidthComputed = computed(() => `calc(${100-ltWidthPercentage.value}% - 0.${splitterWidthInPercentOfOneRem/2}rem)`)
@@ -43,12 +43,8 @@ function releaseResize(event){
 
 const touchFunctions = {}
 
-onBeforeMount(() =>
-    globals.touchDisplay = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-)
-
 onMounted(()=>{
-    if(globals.touchDisplay){
+    if(touchDisplay){
 
       globals.splitHovered = splitHovered
       const splitterLeftCoordinateGetter = () => splitter.value.getBoundingClientRect().left
@@ -99,7 +95,7 @@ onMounted(()=>{
 </script>
 
 <template>
-  <left-tab></left-tab>
+  <left-tab :touchDisplay="touchDisplay"></left-tab>
   <div id="splitter"
        ref="splitter"
        @mouseenter="splitHovered=true"
@@ -113,7 +109,7 @@ onMounted(()=>{
     >
     </div>
   </div>
-  <right-tab></right-tab>
+  <right-tab :resizing="resizing"></right-tab>
 </template>
 
 <style lang="scss">

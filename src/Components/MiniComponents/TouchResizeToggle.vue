@@ -17,8 +17,7 @@ onMounted(()=>{
 })
 </script>
 <template>
-  <div v-if="globals.touchDisplay"
-       class="crazyDiv"
+  <div class="crazyDiv"
        ref="btnDiv">
     <button :class="['mobile-resize-toggle-button', {'selected': globals.splitHovered}]"
             @click="toggleResize">
