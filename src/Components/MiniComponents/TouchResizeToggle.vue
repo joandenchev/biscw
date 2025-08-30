@@ -21,7 +21,7 @@ onMounted(()=>{
        ref="btnDiv">
     <button :class="['mobile-resize-toggle-button', {'selected': globals.splitHovered}]"
             @click="toggleResize">
-      <img src="~assets/resize-mobile.svg" alt="Toggle resize" title="Toggle resize" class="mobile-resize-toggle-image">
+      <img src="/assets/resize-mobile.svg" alt="Toggle resize" title="Toggle resize" class="mobile-resize-toggle-image">
     </button>
   </div>
 </template>

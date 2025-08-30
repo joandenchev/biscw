@@ -24,7 +24,7 @@ function checkOverflow(el){
 <template>
   <div class="outer-dbe">
     <div class="inner-dbe" ref="dbe" :title="nameOfDb">
-      <img src="~assets/storage-device.png" alt="Button image">
+      <img src="/assets/storage-device.png" alt="Button image">
       <p>{{ pText }}</p>
     </div>
   </div>

@@ -13,10 +13,10 @@ const increaseSplitter = ref()
 const splitterWidthInPercentOfOneRem = 24
 const splitterWidthFormatted = `0.${splitterWidthInPercentOfOneRem}rem`
 
-const ltWidthPercentage = ref(50)
+const ltWidthPercentage = ref(0)
 const splitHovered = ref(false)
 const resizing = ref(false)
-const touchDisplay = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+const touchDisplay = 'ontouchstart' in window
 
 const ltWidthComputed = computed(() => `calc(${ltWidthPercentage.value}% - 0.${splitterWidthInPercentOfOneRem/2}rem)`)
 const rtWidthComputed = computed(() => `calc(${100-ltWidthPercentage.value}% - 0.${splitterWidthInPercentOfOneRem/2}rem)`)
@@ -95,7 +95,7 @@ onMounted(()=>{
 </script>
 
 <template>
-  <left-tab :touchDisplay="touchDisplay"></left-tab>
+  <left-tab :touch-display="touchDisplay"></left-tab>
   <div id="splitter"
        ref="splitter"
        @mouseenter="splitHovered=true"

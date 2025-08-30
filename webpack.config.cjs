@@ -20,7 +20,13 @@ module.exports = {
         port: 80,
         allowedHosts: [
             'joan'
-        ]
+        ],
+        static: {
+            directory: path.resolve(__dirname, 'assets'),
+            publicPath: '/assets',
+            watch: true
+        },
+        hot: true
     },
     module: {
         rules: [
@@ -44,13 +50,6 @@ module.exports = {
                         }
                     }
                 ],
-            },
-            {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
-                type: 'asset/resource',
-                generator: {
-                    filename: 'assets/[name][ext]'
-                }
             }
         ]
     },
