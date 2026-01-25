@@ -3,12 +3,12 @@
   "name": "Bright",
   "metadata": {
     "mapbox:groups": {
-      "1444849242106.713": {"collapsed": false, "name": "Places"},
-      "1444849334699.1902": {"collapsed": true, "name": "Bridges"},
+      "1444849242106.713":  {"collapsed": false, "name": "Places"},
+      "1444849334699.1902": {"collapsed": true,  "name": "Bridges"},
       "1444849345966.4436": {"collapsed": false, "name": "Roads"},
-      "1444849354174.1904": {"collapsed": true, "name": "Tunnels"},
+      "1444849354174.1904": {"collapsed": true,  "name": "Tunnels"},
       "1444849364238.8171": {"collapsed": false, "name": "Buildings"},
-      "1444849382550.77": {"collapsed": false, "name": "Water"},
+      "1444849382550.77":   {"collapsed": false, "name": "Water"},
       "1444849388993.3071": {"collapsed": false, "name": "Land"}
     }
   },
@@ -25,8 +25,7 @@
     }
   },
   "sprite": "http://192.168.100.150/assets/icons/sprite",
-  "glyphs": "http://192.168.100.150/assets/glyphs/{fontstack}/{range}.pbf"
-,
+  "glyphs": "assets/fonts/{fontstack}/{range}.pbf",
   "layers": [
     {
       "id": "background",
@@ -1789,7 +1788,7 @@
         "line-color": "hsl(248, 7%, 66%)",
         "line-width": {
           "base": 1,
-          "stops": [[0, 0.6], [4, 1.4], [5, 2], [8, 4], [12, 2]]
+          "stops": [[0, 0.6], [4, 1.4], [5, 2], [8, 4], [12, 4]]
         }
       }
     },

@@ -15,8 +15,8 @@ onMounted(()=>{
     map.instance = new maplibre.Map({
       container: 'map',
       style: mapStyle,
-      center: [25.5, 42.5],
-      zoom: 6,
+      center: [23.044358546773413, 42.63134457306581],
+      zoom: 10,
       minZoom: 4,
       maxZoom: 20
     })
